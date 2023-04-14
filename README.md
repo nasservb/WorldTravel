@@ -1,13 +1,16 @@
 This project implements a simple PHP-backed application for searching for travel and booking a ticket for a customer. 
 
-* The application architecture is MVC and does not use any PHP framework. 
-* The front-end application used Vue.js to implement the customer panel and require.js to manage JavaScript library loading in the browser. 
-* The database is MySQL, and the relationships between the tables are defined. 
-* The ORM is a simple PHP file that any other SQL-compatible database can replace by implementing a database interface. DB providers use a strategy pattern to switch between database drivers. 
+* The application architecture is MVC and implemented with PHP pure (without framework).
+* The front-end application used Vue.js to implement the customer panel and require.js to manage JavaScript library loading in the browser.
+* The database is MySQL, and the relationships between the tables are defined.
+* The ORM is a simple PHP file that any other SQL-compatible database can replace by implementing a database interface. DB providers use a strategy pattern to switch between database drivers.
 * The event-driven architecture is implemented with the RabbitMQ driver.
 * You could see simple events and consumers in the code base.
-*  Security is so simple and powered by JWT tokens that can be kept for 1 hour each. 
+* Security is so simple and powered by JWT tokens that can be kept for 1 hour each.
 * The router is implemented with an elementary PHP class.
+* The application used Docker Compose to run all components. 
+* The integration tests are implemented by using the PHPUnit library. 
+
 
 ## Table of Contents
 - [Class Diagram](#class-diagram)
