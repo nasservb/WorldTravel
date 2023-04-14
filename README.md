@@ -10,12 +10,15 @@ This project implements a simple PHP-backed application for searching for travel
 * The router is implemented with an elementary PHP class.
 
 ## Table of Contents
-
+- [Class Diagram](#class-diagram)
 - [Setup environment](#setup-environment)
 - [Build backend](#build-backend)
 - [Build frontend](#build-frontend)
 - [Run Tests](#tests)
 - [Run Rabbitmq consumer](#rabbitmq-consumer)
+
+### Class Diagram
+<p align="center"><img src="doc/class-diagram.png" width="60%"/></p>
 
 ### Setup environment
 
