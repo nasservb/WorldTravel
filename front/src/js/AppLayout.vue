@@ -1,14 +1,12 @@
 <template>
-    <div>
-        <transition name="scale" mode="out-in">
-            <router-view :key="$route.fullPath"></router-view>
-        </transition>
+<div>
+    <transition name="scale" mode="out-in">
+        <router-view :key="$route.fullPath"></router-view>
+    </transition>
 
-    </div>
+</div>
 </template>
 
 <script>
-
-    export default {
-    }
+export default {}
 </script>

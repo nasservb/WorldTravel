@@ -10,7 +10,8 @@ class Place
      */
     public function run()
     {
-       DB::run("
+        DB::run(
+            "
        INSERT INTO `places` (`id`, `name`, `address`, `location_latitude`, `location_longitude`) 
        VALUES
         (1, '50670 Cologne', '50670 Cologne, Hansaring 115', NULL, NULL),
@@ -19,7 +20,8 @@ class Place
         (4, '53332 Bornheim', '53332 Bornheim, Hauptweg 2', NULL, NULL),
         (5, 'Cologne Main Station', 'Cologne Main Station', NULL, NULL),
         (6, 'Düsseldorf Main Station', 'Düsseldorf Main Station', NULL, NULL);
-       ");
+       "
+        );
     }
 
 

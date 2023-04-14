@@ -12,7 +12,8 @@ class Transfer
      */
     public function up()
     {
-       DB::run('
+        DB::run(
+            '
        CREATE TABLE `transfers` (
         `id` int NOT NULL,
         `source_place_id` int NOT NULL,
@@ -24,47 +25,60 @@ class Transfer
         `vehicle_class_id` int NOT NULL,
         `passenger_capacity` int DEFAULT 1
       ) ENGINE=InnoDB;
-       ');
+       '
+        );
 
-       DB::run('
+        DB::run(
+            '
        ALTER TABLE `transfers`
        ADD PRIMARY KEY (`id`);
-       ');
+       '
+        );
 
-       DB::run('
+        DB::run(
+            '
        ALTER TABLE `transfers`
         MODIFY `id` int NOT NULL AUTO_INCREMENT;    
-       ');
+       '
+        );
 
-       /**
-        * foreign keys
-        */
-       DB::run('
+        /**
+         * foreign keys
+         */
+        DB::run(
+            '
        ALTER TABLE `transfers` 
         ADD CONSTRAINT `source_place` FOREIGN KEY (`source_place_id`) 
             REFERENCES `places`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;        
-       ');
+       '
+        );
        
-       DB::run('
+        DB::run(
+            '
        ALTER TABLE `transfers` 
         ADD CONSTRAINT `destination_places` FOREIGN KEY (`destination_place_id`) 
             REFERENCES `places`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
-       ');
+       '
+        );
 
-       DB::run('
+        DB::run(
+            '
        ALTER TABLE `transfers` 
         ADD CONSTRAINT `driver` FOREIGN KEY (`executing_driver`) 
             REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;      
-        ');
+        '
+        );
 
-        DB::run('
+        DB::run(
+            '
         ALTER TABLE `transfers` 
          ADD CONSTRAINT `vehicle_class` FOREIGN KEY (`vehicle_class_id`) 
              REFERENCES `vehicle_classes`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;     
-         ');
+         '
+        );
 
 
-       return $this;
+        return $this;
     }
 
     /**
@@ -75,11 +89,13 @@ class Transfer
     public function down()
     { 
         
-        DB::run('
+        DB::run(
+            '
        drop table if exists transfers;
-       ');
+       '
+        );
 
       
-       return $this;
+        return $this;
     }
 };

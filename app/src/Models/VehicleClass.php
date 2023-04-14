@@ -16,8 +16,8 @@ class VehicleClass extends BaseEntity
     protected $icon;
 
      /**
-     * @param string $name
-     */
+      * @param string $name
+      */
     public function __construct($name)
     {
         parent::__construct($name);

@@ -18,8 +18,9 @@ abstract class BaseEntity
 
     /**
      * entity constructor.
+     *
      * @param string $name
-     * @param int $id
+     * @param int    $id
      */
     public function __construct($name=null ,$id=null)
     {
@@ -59,8 +60,11 @@ abstract class BaseEntity
         $count = 0;
         $fields = '';
         foreach(get_object_vars($this) as $col => $val) {
-            if ($col == '_table' || $val == null) continue;
-            if ($count++ != 0) $fields .= ', ';
+            if ($col == '_table' || $val == null) { 
+                continue;
+            }
+            if ($count++ != 0) { $fields .= ', ';
+            }
             $fields .= "`$col` = '$val'";
         }
 
@@ -90,7 +94,7 @@ abstract class BaseEntity
     }
 
     /** 
-     * @param int $id
+     * @param  int $id
      * @return entity
      */
     public function findById($id)
@@ -99,8 +103,10 @@ abstract class BaseEntity
         $data= DB::run($query);
         if (is_array($data)) {
             foreach( $data[0] as $col => $val) {
-                if ($col == '_table' || $val == null) continue;
-                if (isset($data[0][$col])){
+                if ($col == '_table' || $val == null) { 
+                    continue;
+                }
+                if (isset($data[0][$col])) {
                     $this->{$col} = $data[0][$col];
                 }
             } 

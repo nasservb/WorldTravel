@@ -12,29 +12,37 @@ class VehicleClass
      */
     public function up()
     {
-       DB::run('
+        DB::run(
+            '
        CREATE TABLE `vehicle_classes` (
         `id` int NOT NULL,
         `name` varchar(100) NOT NULL,
         `icon` varchar(100) NULL
       ) ENGINE=InnoDB;
-       ');
+       '
+        );
        
-       DB::run('
+        DB::run(
+            '
        ALTER TABLE `vehicle_classes`
         ADD UNIQUE KEY `name` (`name`);
-       ');
+       '
+        );
 
-       DB::run('       
+        DB::run(
+            '       
         ALTER TABLE `vehicle_classes`
         ADD PRIMARY KEY (`id`); 
-       ');
+       '
+        );
 
-       DB::run('
+        DB::run(
+            '
        ALTER TABLE `vehicle_classes`
         MODIFY `id` int NOT NULL AUTO_INCREMENT;    
-       ');
-       return $this;
+       '
+        );
+        return $this;
       
     }
 
@@ -45,9 +53,11 @@ class VehicleClass
      */
     public function down()
     {
-        DB::run('
+        DB::run(
+            '
        drop table if exists vehicle_classes 
-       ');
-       return $this;
+       '
+        );
+        return $this;
     }
 };

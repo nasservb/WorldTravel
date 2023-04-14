@@ -51,13 +51,13 @@ class Transfer extends BaseEntity implements ISearchable
     protected $end_time;
 
     /**
-     * @param Place $source
-     * @param Place $destination
-     * @param DateTime $start
-     * @param DateTime $end
+     * @param Place        $source
+     * @param Place        $destination
+     * @param DateTime     $start
+     * @param DateTime     $end
      * @param VehicleClass $vehicleClass
-     * @param float $price
-     * @param int $passengerCapacity
+     * @param float        $price
+     * @param int          $passengerCapacity
      */
     public function __construct($source,$destination, $start, $end, $vehicleClass,$price,  $passengerCapacity)
     {
@@ -79,7 +79,7 @@ class Transfer extends BaseEntity implements ISearchable
     }
 
     /**
-     * @param int $passengerCapacity
+     * @param  int $passengerCapacity
      * @return void
      */
     public function setPassengerCapacity($passengerCapacity)
@@ -96,7 +96,7 @@ class Transfer extends BaseEntity implements ISearchable
     }
 
     /**
-     * @param float $price
+     * @param  float $price
      * @return void
      */
     public function setPricePerTicket($price)
@@ -113,7 +113,7 @@ class Transfer extends BaseEntity implements ISearchable
     }
 
     /**
-     * @param DateTime $date
+     * @param  DateTime $date
      * @return void
      */
     public function setStartTime($date)
@@ -130,7 +130,7 @@ class Transfer extends BaseEntity implements ISearchable
     }
 
     /**
-     * @param DateTime $date
+     * @param  DateTime $date
      * @return void
      */
     public function setEndTime($date)
@@ -147,7 +147,7 @@ class Transfer extends BaseEntity implements ISearchable
     }
 
     /**
-     * @param User $driver
+     * @param  User $driver
      * @return void
      */
     public function setExecutingDriver($driver)
@@ -156,15 +156,15 @@ class Transfer extends BaseEntity implements ISearchable
     }
 
      /**
-     * @return Place|null
-     */
+      * @return Place|null
+      */
     public function getSourcePlace()
     {
         return $this->source_place_id ? (new Place())->findById($this->source_place_id) : null;
     }
 
     /**
-     * @param Place $source
+     * @param  Place $source
      * @return void
      */
     public function setSourcePlace($place)
@@ -173,15 +173,15 @@ class Transfer extends BaseEntity implements ISearchable
     }
 
      /**
-     * @return Place|null
-     */
+      * @return Place|null
+      */
     public function getDestinationPlace()
     {
         return $this->destination_place_id ? (new Place())->findById($this->destination_place_id) : null;
     }
 
     /**
-     * @param Place $destination
+     * @param  Place $destination
      * @return void
      */
     public function setDestinationPlace($place)
@@ -190,11 +190,12 @@ class Transfer extends BaseEntity implements ISearchable
     }
 
     /**
-    * @param Array $filters
-    * 
-    * @return BaseEntity
-    */
-    public static function search($filters){
+     * @param Array $filters
+     * 
+     * @return BaseEntity
+     */
+    public static function search($filters)
+    {
         $query=sprintf(
             'SELECT 
             tr.id as id ,sr_place.name as source, 
@@ -209,16 +210,17 @@ class Transfer extends BaseEntity implements ISearchable
             '   tr.destination_place_id =%u and '.
             '   tr.start_time >=\'%s\' and '.
             '   tr.end_time <=\'%s\'', 
-
             $filters['source_place'],
             $filters['destination_place'],
             $filters['start_time'],
-            $filters['end_time']);
+            $filters['end_time']
+        );
           
         return DB::run($query);
     }
 
-    public static function getById($id){
+    public static function getById($id)
+    {
         
         $query=sprintf(
             'SELECT 
@@ -232,22 +234,25 @@ class Transfer extends BaseEntity implements ISearchable
             left join users u on tr.executing_driver = u.id '.
             ' where  '.
             '   tr.id =%u', 
-            $id);
+            $id
+        );
         $data =DB::run($query);           
 
-        $seatQuery =sprintf('select seats_booked from books where transfer_id = %u',$id);
+        $seatQuery =sprintf('select seats_booked from books where transfer_id = %u', $id);
         $seats =DB::run($seatQuery);           
 
         return is_array($data) ? ['data'=>$data[0],'seats'=>$seats]: null;
     }
 
-    public static function find($id){
+    public static function find($id)
+    {
         
         $query=sprintf(
             'SELECT * from transfers '.
             ' where  '.
             '   id =%u', 
-            $id);
+            $id
+        );
         $data =DB::run($query);          
        
         return is_array($data) ? $data[0]: null;

@@ -3,21 +3,25 @@ namespace nasservb\AgencyAssistant\Consumers;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage; 
 
-abstract class BaseConsumer {
+abstract class BaseConsumer
+{
     private $channel ; 
     private $connection ; 
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->connect(); 
     }
 
-    private function connect(){
+    private function connect()
+    {
         $this->connection = new AMQPStreamConnection('rabbitmq', 5672, 'rabbitmq', '12345678');
         $this->channel = $connection->channel();
         return $this->connection; 
     }
 
-    public function Waite(){
+    public function Waite()
+    {
 
         $this->channel->queue_declare($this->queueName, false, false, false, false);
 

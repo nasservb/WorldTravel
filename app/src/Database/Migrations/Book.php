@@ -12,7 +12,8 @@ class Book
      */
     public function up()
     {
-       DB::run('
+        DB::run(
+            '
        CREATE TABLE `books` ( 
         `id` int NOT NULL,
          `user_id` int NOT NULL, 
@@ -21,41 +22,52 @@ class Book
          `seats_booked` int DEFAULT 0, 
          `pickup_time` datetime DEFAULT NULL, 
          `fare` float DEFAULT 0) ENGINE=InnoDB ;
-       ');
+       '
+        );
        
-       DB::run('       
+        DB::run(
+            '       
         ALTER TABLE `books`
         ADD PRIMARY KEY (`id`); 
-       ');
+       '
+        );
  
 
-       DB::run('
+        DB::run(
+            '
        ALTER TABLE `books`
         MODIFY `id` int NOT NULL AUTO_INCREMENT;    
-       ');
+       '
+        );
 
-       /**
-        * foreign keys
-        */
-       DB::run('
+        /**
+         * foreign keys
+         */
+        DB::run(
+            '
        ALTER TABLE `books` 
         ADD CONSTRAINT `booked_user` FOREIGN KEY (`booked_by`) 
             REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;      
-       ');
+       '
+        );
        
-       DB::run('
+        DB::run(
+            '
        ALTER TABLE `books` 
         ADD CONSTRAINT `user` FOREIGN KEY (`user_id`) 
             REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
-       ');
+       '
+        );
 
-       DB::run('
+        DB::run(
+            '
        ALTER TABLE `books` 
         ADD CONSTRAINT `transfer` FOREIGN KEY (`transfer_id`) 
             REFERENCES `transfers`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;    
-        ');
+        '
+        );
 
-       return $this;
+        return $this;
     }
 
     /**
@@ -66,9 +78,11 @@ class Book
     public function down()
     {
 
-        DB::run('
+        DB::run(
+            '
        drop table if exists books
-       ');
-       return $this;
+       '
+        );
+        return $this;
     }
 };

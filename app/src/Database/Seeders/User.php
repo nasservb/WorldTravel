@@ -10,7 +10,8 @@ class User
      */
     public function run()
     {
-       DB::run("
+        DB::run(
+            "
        INSERT INTO `users` (`id`, `name`, `phone`, `email_address`, `user_type`, `password`) 
        VALUES 
         (NULL, 'nasser1', '3178552288', 'nasser.niazymobsser@gmail.com', 'user', '".md5('12345678')."'),
@@ -19,7 +20,8 @@ class User
         (NULL, 'nasser4', '6178552288', 'nasser4.niazymobsser@gmail.com', 'admin', '".md5('12345678')."');
 
 
-       ");
+       "
+        );
     }
 
 

@@ -4,7 +4,8 @@ namespace nasservb\AgencyAssistant\Models;
 use nasservb\AgencyAssistant\Database\DB;
 
 class User extends Auth implements ISearchable
-{ 
+{
+ 
     /**
      * @var string table nem on database 
      */
@@ -22,7 +23,8 @@ class User extends Auth implements ISearchable
         parent::__construct($name);
     }
 
-    public function register($email, $password) : bool{
+    public function register($email, $password) : bool
+    {
         $this->email_address = $email ; 
         $this->password =  md5($password);
 
@@ -30,8 +32,8 @@ class User extends Auth implements ISearchable
     }
 
     /**
-    * @return string
-    */
+     * @return string
+     */
     public function getPhoneNumber()
     {
         return $this->phone_number;
@@ -46,7 +48,7 @@ class User extends Auth implements ISearchable
     }
 
     /**
-     * @param str $phone
+     * @param  str $phone
      * @return void
      */
     public function setPhoneNumber($phone)
@@ -55,12 +57,12 @@ class User extends Auth implements ISearchable
     }
  
     /**
-     * @param str $type
+     * @param  str $type
      * @return void
      */
     public function setUserType($type)
     {
-        if(!in_array($type,[])){
+        if(!in_array($type, [])) {
             throw new Exception('Invalid user type');
         }
 
@@ -68,16 +70,18 @@ class User extends Auth implements ISearchable
     }
 
     /**
-    * @param Array $filters
-    * 
-    * @return Array of strings 
-    */
-    public static function search($filters){
-         $query=sprintf(
+     * @param Array $filters
+     * 
+     * @return Array of strings 
+     */
+    public static function search($filters)
+    {
+        $query=sprintf(
             'select * from users  
               where  
                 `email`=%s', 
-                $filters['email']);
+            $filters['email']
+        );
          return DB::run($query);
     }
 

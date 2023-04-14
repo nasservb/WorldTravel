@@ -12,52 +12,58 @@ class Routes
         $request = $_SERVER['REQUEST_URI'];
 
         switch ($request) {
-            case '':
-            case '/':
-                return (new DefaultController)->index() ;
+        case '':
+        case '/':
+            return (new DefaultController)->index();
                 break;
 
-            case '/auth/login':                
-                return (new AuthController)->login() ;
+        case '/auth/login':                
+            return (new AuthController)->login();
                 break;
 
-            case '/auth/logout':
-                return (new AuthController)->logout() ;
+        case '/auth/logout':
+            return (new AuthController)->logout();
                 break;
                 
-            /*******booking**********/
-            case (substr($request,0,9)=='/book/add'):
-                return (new BookingController)->book() ;
+        /*******
+        * booking
+        **********/
+        case (substr($request, 0, 9)=='/book/add'):
+            return (new BookingController)->book();
                 break;
 
-            case '/book/list':
-                return (new BookingController)->getBooks() ;
+        case '/book/list':
+            return (new BookingController)->getBooks();
                 break;
 
-            case (substr($request,0,10)=='/book/view'):
-                return (new BookingController)->getBookDetails() ;
+        case (substr($request, 0, 10)=='/book/view'):
+            return (new BookingController)->getBookDetails();
                 break;
 
-            /*******transfer**********/ 
-            case (substr($request,0,16)=='/transfer/search'):
-                return (new TransferController)->search() ;
+        /*******
+        * transfer
+        **********/ 
+        case (substr($request, 0, 16)=='/transfer/search'):
+            return (new TransferController)->search();
                 break;
-            case (substr($request,0,14)=='/transfer/view'):
-                return (new TransferController)->getTransferDetails() ;
-                break;
-
-            /*******others**********/ 
-            case '/place/list':
-                return (new TransferController)->getPlaces() ;
+        case (substr($request, 0, 14)=='/transfer/view'):
+            return (new TransferController)->getTransferDetails();
                 break;
 
-            case '/vehicle/list':
-                return (new TransferController)->getVehicleClasses() ;
+        /*******
+        * others
+        **********/ 
+        case '/place/list':
+            return (new TransferController)->getPlaces();
+                break;
+
+        case '/vehicle/list':
+            return (new TransferController)->getVehicleClasses();
                 break;
                 
-            default:
-                http_response_code(404);
-                return (new DefaultController)->error(404) ;
+        default:
+            http_response_code(404);
+            return (new DefaultController)->error(404);
                 break;
         }
     }

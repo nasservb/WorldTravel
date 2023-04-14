@@ -2,11 +2,11 @@
 
 namespace nasservb\AgencyAssistant\Models;
 
-interface ISearchable 
+interface ISearchable
 {
     /**
-    * @param string $name
-    */
+     * @param string $name
+     */
     public static function search($filters);
     
 }

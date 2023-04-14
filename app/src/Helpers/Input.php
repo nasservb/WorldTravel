@@ -3,11 +3,13 @@ namespace nasservb\AgencyAssistant\Helpers;
 
 use nasservb\AgencyAssistant\Menu;
 
-trait Input{
+trait Input
+{
 
     /**
      * read number from terminal
-     * @param null $prompt
+     *
+     * @param  null $prompt
      * @return int
      */
     public static  function readNumber($prompt = null ): int

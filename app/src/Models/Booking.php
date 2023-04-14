@@ -41,11 +41,11 @@ class Booking extends BaseEntity implements IPrintable
     protected $fare;
  
     /**
-     * @param string $name
-     * @param int $userId
+     * @param string   $name
+     * @param int      $userId
      * @param Transfer $transfer
-     * @param int $seatsBooked
-     * @param int $bookedBy
+     * @param int      $seatsBooked
+     * @param int      $bookedBy
      */
     public function __construct($userId, $transfer, $seatsBooked=0, $bookedBy=null)
     {
@@ -66,24 +66,24 @@ class Booking extends BaseEntity implements IPrintable
     }  
 
     /**
-    * @param int $userId
-    */
+     * @param int $userId
+     */
     public function setUserId(int $userId  )
     {
         $this->user_id= $userId;
     }
 
     /**
-    * @return int
-    */
+     * @return int
+     */
     public function getTransferId()
     {
         return $this->transfer_id;
     }  
 
     /**
-    * @param int $transferId
-    */
+     * @param int $transferId
+     */
     public function setTransferId(int $transferId  )
     {
         $this->transfer_id= $transferId;
@@ -98,8 +98,8 @@ class Booking extends BaseEntity implements IPrintable
     }  
 
     /**
-    * @param int $userId
-    */
+     * @param int $userId
+     */
     public function setBookedBy(int $userId  )
     {
         $this->booked_by= $userId;
@@ -144,11 +144,13 @@ class Booking extends BaseEntity implements IPrintable
         $this->pickup_time= $date;
     }
 
-    public function print():string{
+    public function print():string
+    {
         return '';
     }
 
-    public static function getBooksByUserId($userId){
+    public static function getBooksByUserId($userId)
+    {
         
         $query = 'SELECT 
                 bk.id as id ,sr_place.name as source, 
@@ -163,7 +165,8 @@ class Booking extends BaseEntity implements IPrintable
         return DB::run($query);
     }
 
-    public static function getById($id){      
+    public static function getById($id)
+    {      
 
         $query = 'SELECT 
             bk.id as id ,sr_place.name as source, bk.pickup_time as pickup_time,

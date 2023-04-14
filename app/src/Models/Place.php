@@ -27,9 +27,9 @@ class Place extends BaseEntity implements ISearchable
 
     /**
      * @param string $name
-     * @param int $address
-     * @param float $latitude
-     * @param float $longitude
+     * @param int    $address
+     * @param float  $latitude
+     * @param float  $longitude
      */
     public function __construct( $name, $address='', $latitude=0, $longitude=0)
     {
@@ -60,7 +60,8 @@ class Place extends BaseEntity implements ISearchable
      * 
      * @return BaseEntity
      */
-    public static function search($filters){
+    public static function search($filters)
+    {
 
     }
 

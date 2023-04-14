@@ -6,32 +6,34 @@ use nasservb\AgencyAssistant\Database\Seeders\Seeders;
 
 use nasservb\AgencyAssistant\Database\Drivers\Mysql;
 
-class DB{
+class DB
+{
 
     private static $driver = null; 
 
-    private function __construct(){}  
+    private function __construct()
+    {
+    }  
 
     /**
      * @var DatabaseInterface $driver
      */
     public static function connect($driver = null ) 
     {
-        if (!$driver ){
+        if (!$driver ) {
             static::$driver = new Mysql(); 
-            static::$driver->connect('db','world_travel','root','12345678'); 
+            static::$driver->connect('db', 'world_travel', 'root', '12345678'); 
         }
     }
 
     /**
-     * @param string $query
-     * @param array by reference $rows
+     * @param string                      $query
+     * @param array by reference          $rows
      * @param int by reference rows count 
      */
     public static function run($query,&$row='',&$count=0)
     {
-        if (!static::$driver)
-        {
+        if (!static::$driver) {
             static::connect(); 
         }
         
@@ -47,17 +49,16 @@ class DB{
      */
     public static function getLastInsertedId()
     {
-        if (!static::$driver)
-        {
+        if (!static::$driver) {
             static::connect(); 
         }
 
         return static::$driver->getLastInsertedId(); 
     } 
 
-    public static function init(){
-        if (!static::$driver)
-        {
+    public static function init()
+    {
+        if (!static::$driver) {
             static::connect(); 
         }
 

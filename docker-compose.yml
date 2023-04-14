@@ -1,24 +1,10 @@
 version: '3'
 services:
-
-  #PHP Service
-  laravel:
-    image: laravelsail/php81-composer
-    restart: unless-stopped
-    depends_on:
-      - db
-    tty: true
-    ports:
-      - "8000:8000"
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-    working_dir: /var/www
-    volumes:
-      - ./Vulnerability:/var/www
       
-  app:
-    image: djpic/php:8.1.14-mysqli
+  app:  
+    build:
+      context: ./app
+      dockerfile: Dockerfile
     restart: unless-stopped
     depends_on:
       - db

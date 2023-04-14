@@ -13,7 +13,8 @@ class User
      */
     public function up()
     {
-       DB::run('
+        DB::run(
+            '
        CREATE TABLE `users` (
         `id` int NOT NULL,
         `name` varchar(100) NOT NULL,
@@ -22,19 +23,24 @@ class User
         `user_type`ENUM(\'agency\',\'user\',\'admin\',\'driver\')  NOT NULL,
         `password` varchar(100) NOT NULL
       ) ENGINE=InnoDB;
-       ');
+       '
+        );
 
-       DB::run('
+        DB::run(
+            '
        ALTER TABLE `users`
        ADD PRIMARY KEY (`id`),
        ADD UNIQUE KEY `name_unique` (`name`);
-       ');
-       DB::run('
+       '
+        );
+        DB::run(
+            '
        ALTER TABLE `users`
         MODIFY `id` int NOT NULL AUTO_INCREMENT;
-       ');
+       '
+        );
        
-       return $this;
+        return $this;
     }
 
     /**
@@ -44,9 +50,11 @@ class User
      */
     public function down()
     {
-        DB::run('
+        DB::run(
+            '
        drop table if exists users 
-       ');
-       return $this;
+       '
+        );
+        return $this;
     }
 };

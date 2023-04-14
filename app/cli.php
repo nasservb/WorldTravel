@@ -25,18 +25,19 @@ class Main
 
     /**
      * process main menu
+     *
      * @param $number
      */
     public static function processMainMenu($number)
     {
         switch ($number) {
           
-            case 7 : //search
-                DB::init();
-                echo Menu::getCompleteMigration();
-                break;
-            case 8:
-                exit(0);
+        case 7 : //search
+            DB::init();
+            echo Menu::getCompleteMigration();
+            break;
+        case 8:
+            exit(0);
                 break;
         }
     }
