@@ -1,0 +1,111 @@
+version: '3'
+services:
+
+  #PHP Service
+  laravel:
+    image: laravelsail/php81-composer
+    restart: unless-stopped
+    depends_on:
+      - db
+    tty: true
+    ports:
+      - "8000:8000"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./Vulnerability:/var/www
+      
+  app:
+    image: djpic/php:8.1.14-mysqli
+    restart: unless-stopped
+    depends_on:
+      - db
+    tty: true
+    ports:
+      - "9001:9000"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./app:/var/www/
+
+  front:
+    image: node:12-alpine
+    container_name: front
+    restart: unless-stopped
+    ports:
+      - "3000:8080"
+    depends_on:
+      - app
+    tty: true
+    environment:
+      SERVICE_NAME: node
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./front:/var/www
+
+  webserver:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "4000:80"
+      - "4443:443"
+    volumes:
+      - ./app:/var/www/
+      - ./front/src/public:/var/www/front
+      - ./webserver/conf.d/:/etc/nginx/conf.d/
+      
+  #MySQL Service
+  db:
+    image: mysql:8
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: world_travel
+      MYSQL_ROOT_PASSWORD: "12345678"
+      MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./mysql/data:/var/lib/mysql/
+  
+
+  rabbitmq:
+    image: rabbitmq:latest
+    restart: unless-stopped
+    tty: true
+    privileged: true
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=12345678
+    hostname: rabbitmq
+    depends_on:
+      - app
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15671:15671"
+      - "15672:15672"   
+      
+  phpmyadmin:
+    image: phpmyadmin:5.0.4    
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 8080:80 
+
+ 
+volumes:
+  rabbitmq_data: {}    

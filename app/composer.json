@@ -1,0 +1,26 @@
+{
+    "name": "nasservb/tourism-assistant",
+    "description": "help passenger to find best place to travel.",
+    "type": "project",
+    "keywords": ["tourism", "destinia", "search", "hotel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nasser Niazy",
+            "email": "nasservb@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "require": {
+        "firebase/php-jwt": "^6.4",
+        "php-amqplib/php-amqplib": "^2.0"
+    }
+}

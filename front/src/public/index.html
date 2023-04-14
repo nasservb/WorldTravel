@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#4188c9">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+
+    <title>app</title>
+
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/require.min.js"></script>
+    <script>
+        requirejs.config({
+            baseUrl: '/front'
+        });
+    </script>
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <script src="js/dashboard.js"></script>
+
+</head>
+<body class="">
+
+
+<div class="home-head">
+    <div class="container">
+        <div class="d-flex">
+          
+
+                <div class="dropdown my-4">
+                    <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+                        <span class="ml-2 d-none d-lg-block">
+                          <span class="text-default">user</span>
+                          <small class="text-muted d-block mt-1">administrator</small>
+                        </span>
+                        <ssty class="avatar" style="background-image:  url('images/default.jpg')"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+
+                        <a class="dropdown-item" href="/api/auth/logout"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            <i class="dropdown-icon fe fe-log-out"></i> log out
+                        </a>
+                        <form id="logout-form" action="/api/auth/logout" method="POST" style="display: none;">
+                            
+                        </form>
+                    </div>
+                   
+                </div>
+        </div>
+    </div>
+
+    
+    
+    <div class="container">
+        <script>
+               window.auth = {};
+window.routes = [{
+    "uri": "book\/list",
+    "name": "api.booking.index"
+}, {
+    "uri": "book\/view",
+    "name": "api.booking.show"
+}, {
+    "uri": "book\/add",
+    "name": "api.booking.add"
+}, {
+    "uri": "place\/list",
+    "name": "api.place.list"
+}, {
+    "uri": "vehicle\/list",
+    "name": "api.vehicle.index"
+}, {
+    "uri": "transfer\/search",
+    "name": "api.transfer.search"
+}, {
+    "uri": "transfer\/view",
+    "name": "api.transfer.show"
+}, {
+    "uri": "home",
+    "name": "home"
+}, {
+    "uri": "\/",
+    "name": "index"
+}, {
+    "uri": "auth\/login",
+    "name": "auth.login"
+}, {
+    "uri": "auth\/logout",
+    "name": "auth.logout"
+}]
+window.trans = {
+    "auth": {
+        "E-Mail address": "Email ",
+        "Password": "Password",
+        "secure-code": "Secure Code",
+        "Login": "Login ",
+        "login-text": "Too many login attempts. Please try again in :seconds seconds.",
+        "Register": "Register",
+        "full-name": "Full Name",
+        "confirm-password": "Confirm Password",
+        "already-registered": "Already have an account? Log in",
+        "or": "or",
+        "Login with Email and Password": "Login ",
+        "continue-with-facebook": "Continue with Facebook",
+        "continue-with-google": "Continue with Google",
+        "register-in-mix": "Sign up",
+        "register-with-facebook": "Register with Facebook",
+        "register-with-google": "Register with Google",
+        "i-want-to-receive-email": "I want to receive newsletter emails",
+        "Register with Email and Password": "Register with Email and Password",
+        "i-accept-rules": "By signing up, you agree to our ",
+        "register-rules": "registration rules",
+        "Register with Facebook or Google": "Register with Facebook or Google",
+        "reset-password": "Reset Password",
+        "send-password-reset-link": "Send Password Reset Link",
+        "sms-code-prefix": "Your Code is: \n",
+        "your account is successfully activate.": "Your account is successfully activate.",
+        "A fresh verification link has been sent to your email address.": "A fresh verification link has been sent to your email address.",
+        "Before proceeding, please check your email for a verification link.": "Before proceeding, please check your email(spam directory) for a verification link.",
+        "If you did not receive the email": "If you did not receive the email",
+        "click here to request another": "click here to request another",
+    },
+    "common": {
+        "executing_driver" :"Driver Name",
+        "pickup_time" :"Pickup Time",
+        "passenger_capacity" :"Passenger Capacity",
+        "seat_no" :"Seat No",
+        "reserved_seats_no" :"Reserved Seats No",
+        "path":"Path", 
+        "search":"Search", 
+        "source":"Source", 
+        "destination":"Destination", 
+        "start_time":"Travel Time", 
+        "end_time":"Arrive Time",
+        "action":"Action",
+        "price":"Price",
+        "vehicle_class":"Vehicle_class",
+        "book":"Search New Travel",
+        "reserve":"Reserve",
+        "download-app": "Download App",
+        "about-title": "About Us",
+        "contact-title": "Contact Us",
+        "rules-title": "Registration Rules",
+        "id": "Id",
+        "title": "Title",
+        "description": "Description",
+        "created_at": "Created at",
+        "view": "View",
+        "create": "Create",
+        "edit": "Edit",
+        "save": "Save",
+        "delete": "Delete",
+        "are_you_sure_to_delete": "Are you sure to delete?",
+        "the_record_is_deleted": "The record is deleted",
+        "the_record_is_not_deleted": "The record is not deleted",
+        "the_record_is_updated": "The record is updated",
+        "the_record_is_not_updated": "The record is not updated",
+        "the_record_is_created": "The record is created",
+        "the_record_is_not_created": "The record is not created",
+        "welcome": "Welcome to my site."
+    },
+    "layouts": {
+        "next": "Next",
+        "back": "Back",
+        "previous": "Previous",
+        "total": "Total"
+    },
+    "pagination": {
+        "previous": "&laquo; Previous",
+        "next": "Next &raquo;"
+    },
+    "passwords": {
+        "reset": "Your password has been reset!",
+        "sent": "We have emailed your password reset link!",
+        "throttled": "Please wait before retrying.",
+        "token": "This password reset token is invalid.",
+        "user": "We can't find a user with that email address."
+    },
+    "attributes": []
+    }
+window.token = ""
+
+        </script>
+        <link rel="stylesheet" href="css/app.css" />
+
+        <div id="app" class="pt-3">
+            <app></app>
+        </div>
+        <script src="js/app.js"></script>
+    </div>
+
+
+    <footer class="footer" style="background-color: rgb(16,50,69)">
+
+        <div class="">
+            <div class="container">
+                <div class="row" >
+
+                    <div class="col-12">
+                        <div class="col-2" style=" margin-left: auto;margin-right: auto; text-align: center;">
+                            <img alt="footer-logo" src="images/footer-logo.png"/>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6 text-center" style="margin-left: auto;margin-right: auto">
+
+                        <div class="row" style="margin-top: 10px; padding-top: 10px; ">
+                            <div class="col-6 col-md-3">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="#"   class="btn btn-white"> download-app</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-6 col-md-3 mt-2">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a  style="color: white;" href="#">rules</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-6 col-md-3 mt-2">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a style="color: white;"  href="#">contact</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-6 col-md-3 mt-2">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a style="color: white"  href="#">about</a></li>
+                                </ul>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+    <div class="" style="background-color:#082231;color:#145379 ">
+        <div class="container  ">
+
+            <div class=" p-3 text-center">
+                Copyright © 2021 <a href="">my-site</a>text here.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    require(['jquery', 'flip'], function ($, flip) {
+        $(document).ready(function () {
+
+            $("#card").flip({axis: 'y', trigger: 'manual'});
+
+            
+            $('.back').hide('fast');
+            
+
+            var pageShow = 1;
+
+            $("#togglePage").click(function () {
+
+                if (pageShow == 0) {
+
+                    $('.back').show('fast');
+                    $('.front').show('fast');
+
+                    $('#card').flip(false, function () {
+                        $('.back').hide('fast');
+                        $('.front').show('fast');
+                    });
+
+                    pageShow = 1;
+                } else {
+                    $('.back').show('fast');
+                    $('.front').show('fast');
+
+                    window.dispatchEvent(new Event('resize'));
+
+                    $('#card').flip(true, function () {
+                        $('.front').hide('fast');
+                        $('.back').show('fast');
+                    });
+
+                    pageShow = 0;
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

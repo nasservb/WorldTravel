@@ -1,0 +1,59 @@
+.card-header
+{
+    display: initial;
+    margin-top: 1em;
+    vertical-align: center;
+    text-align: center;
+}
+
+.header-p
+{
+    margin-bottom: 0px;
+}
+
+.login-btn
+{
+    margin-top: 20px;
+    font-size: large;
+}
+
+.social-btn .btn i
+{
+    float: left;
+    margin: 10px 15px 0 5px;
+    font-size: 20px;
+    text-align: left;
+    line-height: 24px;
+}
+
+#or
+{
+    position:relative;
+    height: 40px;
+
+    line-height: 40px;
+    text-align: center;
+}
+
+#or::before, #or::after
+{
+    position: absolute;
+    width: 45%;
+    height: 1px;
+
+    top: 24px;
+
+    background-color: #aaa;
+
+    content: '';
+}
+
+#or::before
+{
+    left: 0;
+}
+
+#or::after
+{
+    right: 0;
+}

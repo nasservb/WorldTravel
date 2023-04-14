@@ -1,0 +1,80 @@
+.card-header
+{
+    display: initial;
+    margin-top: 1em;
+    vertical-align: center;
+    text-align: center;
+}
+
+.social-btn .btn i
+{
+    float: left;
+    margin: 4px 15px 0 5px;
+    font-size: 15px;
+    text-align: left;
+    line-height: 24px;
+}
+
+
+
+.btn-block + .btn-block
+{
+    margin-top: 0.5rem;
+}
+
+
+.facebook-login, .facebook-login:hover
+{
+    color: #FFF;
+    background-color: #3C5A96;
+    border-color: #2d2d2e;
+}
+
+.checkbox-inline, .radio-inline
+{
+    margin: 15px 15px 0 5px;
+    position: relative;
+    display: inline-block;
+    padding-left: 20px;
+    font-weight: 400;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#or
+{
+
+
+    width:100%;
+    position:relative;
+    height: 50px;
+
+    line-height: 50px;
+    text-align: center;
+}
+
+#or::before, #or::after
+{
+    position: absolute;
+    width: 45%;
+    height: 1px;
+
+    top: 24px;
+
+    background-color: #aaa;
+
+    content: '';
+}
+
+#or::before
+{
+    left: 0;
+}
+
+#or::after
+{
+    right: 0;
+}
+
+
+
