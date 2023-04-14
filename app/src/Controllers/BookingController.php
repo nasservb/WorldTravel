@@ -58,7 +58,7 @@ class BookingController extends BaseController {
         {
             $book = new Booking($user['id'],$transfer,$seatsBooked,$currentUser['id']);
             if($book->save()->getId() > 0 ){
-                $booked = false ;                 
+                $booked = true ;                 
             }
         }
         
@@ -90,7 +90,7 @@ class BookingController extends BaseController {
         }
         
         $book = Booking::getById($this->get('id'));
-        return $this->render($book,200);
+        
         if(!is_array($book))
         {
             return $this->render('the id is not valid!',422);

@@ -32,7 +32,7 @@ Abstract class Auth extends BaseEntity
         if (is_array($items) && count($items) == 1){         
             unset($items[0]['password']);   
 			$_SESSION['logged_in_user']=$items[0];
-            return true;
+            return $items[0]['id'];
         }
         return false;
     }
@@ -62,9 +62,24 @@ Abstract class Auth extends BaseEntity
     /**
      * @return boolean is logged in or not
     */
-    public function checkLogin(): bool{
-        $key ='logged_in_user';
-        if(isset($_SESSION[$key])==false){
+    public function checkLogin() {
+
+        $userId =0;
+        $headers = getallheaders();
+            
+        if (isset($headers['Authorization'])) {
+            $token =  str_replace('Bearer ', '' , $headers['Authorization']);
+            $secretKey  =$this->getJwtSecretKey();
+
+            $data = JWT::decode(
+                $token,
+                new Key($secretKey, 'HS512')
+            );
+             
+            $userId = $data->userId;
+        }
+       
+        if(!$userId){
             return false;
         }else{
             return true;
@@ -98,9 +113,9 @@ Abstract class Auth extends BaseEntity
         $this->password= $password;
     } 
 
-    public function getToken($username)
+    public function getToken($username,$userId )
     {
-        $secretKey  = 'bGS6lzFqvvSQ8ALbOxatm7/pk7mLQyzqaS34Q4oR1ew=';
+        $secretKey  =$this->getJwtSecretKey();
         $issuedAt   = time();
         $expire     = strtotime('now +60 minutes');      // Add 60 minutes
         $serverName = $_SERVER['SERVER_NAME'];       
@@ -111,6 +126,7 @@ Abstract class Auth extends BaseEntity
             'nbf'  => $issuedAt,         // Not before
             'exp'  => $expire,                           // Expire
             'userName' => $username,                     // User name
+            'userId' => $userId,                     // User name
         ];
 
         return JWT::encode(
@@ -120,9 +136,39 @@ Abstract class Auth extends BaseEntity
         );
     }
 
+    private function getJwtSecretKey() {
+        return  'bGS6lzFqvvSQ8ALbOxatm7/pk7mLQyzqaS34Q4oR1ew=';
+    }
+
     public function getCurrentUserType()
-    {
-        return isset($_SESSION['logged_in_user']) ? $_SESSION['logged_in_user']['user_type'] :'';
+    {        
+        $userId =0;
+
+        /**
+         * read from jwt token
+         */
+        $headers = getallheaders();
+        if (in_array('Authorization', $headers)) {
+            $token =  str_replace('Bearer ', '' , $headers['Authorization']);
+            $secretKey  =$this->getJwtSecretKey();
+
+            $data = JWT::decode(
+                $token,
+                $secretKey,
+                'HS512'
+            );
+            
+            $userId = $data['userId'];
+        }
+
+        /**
+         * read from session
+         */
+        if (!$userId && isset($_SESSION['logged_in_user'])){
+            $userId =$_SESSION['logged_in_user']['id'];
+        } 
+        
+        return  $userId ;
     }
     
 }

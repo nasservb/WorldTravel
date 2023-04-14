@@ -20,10 +20,11 @@ class AuthController extends BaseController {
         $email =$this->post('email');
         $password=$this->post('password');
 
-        if ($this->user->login($email, $password)){
+        $userId = $this->user->login($email, $password);
+        if ($userId){
             
             return  $this->render([
-                'token'=>$this->user->getToken($email),
+                'token'=>$this->user->getToken($email,$userId),
                 'isAgency'=> $this->user->getCurrentUserType() == 'agency' 
             ]);
         }
