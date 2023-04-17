@@ -15,6 +15,7 @@ class Seeders
         (new VehicleClass)->run();
         (new Place)->run();
         (new Transfer)->run();
+        (new DriverPreferred)->run();
         (new Book)->run();
     }
 

@@ -34,15 +34,13 @@ export default {
             const destination = document.getElementById("destination-place").value;
 
             const start = document.getElementById("start-time").value;
-            const end = document.getElementById("end-time").value;
 
             axios.get(
                     route('api.transfer.search'), {
                         params: {
                             source_id: source,
                             destination_id: destination,
-                            start_time: start,
-                            end_time: end
+                            start_time: start
                         }
                     })
                 .then(response => {

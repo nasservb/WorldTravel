@@ -84,5 +84,30 @@ class User extends Auth implements ISearchable
         );
         return DB::run($query);
     }
+  
+    /**
+     * @param  int $source
+     * @param  int $destination
+     * 
+     * @return int driver_id
+     */
+    public static function getFirstDriverByPath($source, $destination) 
+    {
+        $query=sprintf(
+            'select * from driver_preferred  
+              where  
+                `source_place_id`=%u and `destination_place_id`=%u',
+            $source, 
+            $destination
+        ); 
+
+        $data = DB::run($query);
+        if (count($data)>0 ){
+            return $data[0]['driver_id'];
+        }
+
+        return 0;
+    }
+
 
 }

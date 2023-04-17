@@ -14,6 +14,7 @@ class Routes
         switch ($request) {
         case '':
         case '/':
+        case (substr($request, 0, 7)=='/front/'):    
             return (new DefaultController)->index();
                 break;
 

@@ -123,4 +123,9 @@ abstract class BaseEntity
         }
         return $this;
     }
+
+    public function toJsonString(){
+        $properties = get_object_vars($this); 
+        return json_encode($properties);        
+    }
 }

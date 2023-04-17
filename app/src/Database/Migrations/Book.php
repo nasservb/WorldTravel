@@ -21,6 +21,7 @@ class Book
          `transfer_id` int NOT NULL, 
          `seats_booked` int DEFAULT 0, 
          `pickup_time` datetime DEFAULT NULL, 
+         `executing_driver` int DEFAULT NULL, 
          `fare` float DEFAULT 0) ENGINE=InnoDB ;
        '
         );
@@ -64,6 +65,14 @@ class Book
        ALTER TABLE `books` 
         ADD CONSTRAINT `transfer` FOREIGN KEY (`transfer_id`) 
             REFERENCES `transfers`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;    
+        '
+        );
+
+        DB::run(
+            '
+       ALTER TABLE `books` 
+        ADD CONSTRAINT `books_transfer` FOREIGN KEY (`executing_driver`) 
+            REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;    
         '
         );
 

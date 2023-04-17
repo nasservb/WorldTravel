@@ -11,9 +11,8 @@ class BookingController extends BaseController
     {
         $this->checkLogin()->checkPostRequest();
 
-        $currentUser = $this->user->getCurrentUser();  
-
-        $transfer = Transfer::find($this->post('transfer_id'));
+        $currentUser = $this->user->getCurrentUser();
+        $transfer = Transfer::findTransferById($this->post('transfer_id'));
         
         if(!is_array($transfer) || empty($transfer['id'])) {
             return $this->render('the transfer is not valid!', 422);
@@ -30,8 +29,7 @@ class BookingController extends BaseController
         }
 
         $booked = false ; 
-        
-        if (is_array($seatsBooked)) {
+        if (is_array($seatsBooked) ) {
             foreach($seatsBooked as $seat){
                 $book = new Booking($user->getId(), $transfer, $seat, $currentUser->getId());
                 $book->save();
@@ -40,14 +38,14 @@ class BookingController extends BaseController
         }
         else 
         {
-            $book = new Booking($user['id'], $transfer, $seatsBooked, $currentUser['id']);
+            $book = new Booking($user->getId(), $transfer, $seatsBooked, $currentUser->getId());            
             if($book->save()->getId() > 0 ) {
                 $booked = true ;                 
             }
         }
         
         if ($booked) {
-            (new SendMail())->Fire(['subject'=>'New Ticket', 'message'=>'Your Ticket has been created' , 'to'=>$currentUser['email_address']]); 
+            //(new SendMail())->Fire(['subject'=>'New Ticket', 'message'=>'Your Ticket has been created' , 'to'=>$currentUser['email_address']]); 
 
             return $this->render(1, 200);
         }
@@ -69,7 +67,7 @@ class BookingController extends BaseController
     {
         $this->checkLogin()->checkGetRequest();
         
-        $book = Booking::getById($this->get('id'));
+        $book = Booking::getDetailsById($this->get('id'));
         
         if(!is_array($book)) {
             return $this->render('the id is not valid!', 422);

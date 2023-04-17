@@ -22,14 +22,7 @@
     <tr>
         <td>{{ __('common.start_time') }}</td>
         <td>
-            <input type="datetime-local" id="start-time" :min="(new Date()).getDate()" :max=" (new Date((new Date()).setDate((new Date()).getDate() + 30))).getDate() " class="input" />
-        </td>
-    </tr>
-    <tr>
-        <td>{{ __('common.end_time') }}</td>
-        <td>
-            <input type="datetime-local" id="end-time" :min=" (new Date()).getDate() " :max="(new Date((new Date()).setDate((new Date()).getDate() + 30))).getDate() " class="input" />
-
+            <input type="date" id="start-time" :min="(new Date()).getDate()" :max=" (new Date((new Date()).setDate((new Date()).getDate() + 30))).getDate() " class="input" />
         </td>
     </tr>
     <tr>

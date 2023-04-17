@@ -31,22 +31,18 @@ class TransferController extends BaseController
         if(is_bool($startTime)) {
             return $this->render('the start_time is not valid!', 422);
         }
-
-        $endTime = strtotime($this->get('end_time'));
-        if(is_bool($endTime)) {
-            return $this->render('the end_time is not valid!', 422);
-        }
         
-        if ($startTime == $endTime) {
-            return $this->render('the start_time is equal to end_time!', 422);
+        if ($startTime < strtotime(Date("Y-m-d"))) {
+            return $this->render('the start_time must be in feature!', 422);
         }
        
+        $pickupDate = date_create($this->get('start_time'));
         $transfers = Transfer::search(
             [
             'source_place' => $sourcePlace->getId(),
             'destination_place' => $destinationPlace->getId(),
-            'start_time' => date('Y-m-d H:i:s', $startTime),
-            'end_time' => date('Y-m-d H:i:s', $endTime)
+            'start_time' => date_modify($pickupDate,"-1 days")->format('Y-m-d') . ' 00:00:00',
+            'end_time' => date_modify($pickupDate,"+1 days")->format('Y-m-d').' 23:59:59'
             ]
         );
 
@@ -57,7 +53,7 @@ class TransferController extends BaseController
     {
         $this->checkLogin()->checkGetRequest();
  
-        $transfer = Transfer::getById(intval($this->get('id')));
+        $transfer = Transfer::getDetailsById(intval($this->get('id')));
         if(!$transfer ) {
             return $this->render('the id is not valid!', 422);
         }

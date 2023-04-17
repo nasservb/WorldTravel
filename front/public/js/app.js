@@ -2643,13 +2643,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -3078,13 +3071,11 @@ __webpack_require__.r(__webpack_exports__);
       var source = document.getElementById("source-place").value;
       var destination = document.getElementById("destination-place").value;
       var start = document.getElementById("start-time").value;
-      var end = document.getElementById("end-time").value;
       axios.get(route('api.transfer.search'), {
         params: {
           source_id: source,
           destination_id: destination,
-          start_time: start,
-          end_time: end
+          start_time: start
         }
       }).then(function (response) {
         _this.items = response.data;
@@ -22508,43 +22499,45 @@ var render = function () {
       _c("td", [_c("label", [_vm._v(_vm._s(_vm.item.passenger_capacity))])]),
     ]),
     _vm._v(" "),
-    _c("tr", [
-      _c("td", [_vm._v(_vm._s(_vm.__("common.seat_no")))]),
-      _vm._v(" "),
-      _c(
-        "td",
-        [
-          _c("label", [
-            _vm._v(_vm._s(_vm.__("common.reserved_seats_no")) + ":"),
-          ]),
+    _vm.item.passenger_capacity > 1
+      ? _c("tr", [
+          _c("td", [_vm._v(_vm._s(_vm.__("common.seat_no")))]),
           _vm._v(" "),
           _c(
-            "label",
-            _vm._l(_vm.bookedSeats, function (booked) {
-              return _c("span", { staticClass: "tag" }, [
-                _vm._v(_vm._s(booked.seats_booked)),
-              ])
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _vm._l(_vm.getSeat, function (seat) {
-            return _c("fieldset", { attrs: { id: "group3" } }, [
-              _c("input", {
-                attrs: {
-                  type: seat.type,
-                  disabled: seat.disabled,
-                  name: "seat_no[]",
-                },
-                domProps: { value: seat.val },
+            "td",
+            [
+              _c("label", [
+                _vm._v(_vm._s(_vm.__("common.reserved_seats_no")) + ":"),
+              ]),
+              _vm._v(" "),
+              _c(
+                "label",
+                _vm._l(_vm.bookedSeats, function (booked) {
+                  return _c("span", { staticClass: "tag" }, [
+                    _vm._v(_vm._s(booked.seats_booked)),
+                  ])
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.getSeat, function (seat) {
+                return _c("fieldset", { attrs: { id: "group3" } }, [
+                  _c("input", {
+                    attrs: {
+                      type: seat.type,
+                      disabled: seat.disabled,
+                      name: "seat_no[]",
+                    },
+                    domProps: { value: seat.val },
+                  }),
+                  _vm._v(_vm._s(seat.val)),
+                ])
               }),
-              _vm._v(_vm._s(seat.val)),
-            ])
-          }),
-        ],
-        2
-      ),
-    ]),
+            ],
+            2
+          ),
+        ])
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []
@@ -22692,26 +22685,8 @@ var render = function () {
         _c("input", {
           staticClass: "input",
           attrs: {
-            type: "datetime-local",
+            type: "date",
             id: "start-time",
-            min: new Date().getDate(),
-            max: new Date(
-              new Date().setDate(new Date().getDate() + 30)
-            ).getDate(),
-          },
-        }),
-      ]),
-    ]),
-    _vm._v(" "),
-    _c("tr", [
-      _c("td", [_vm._v(_vm._s(_vm.__("common.end_time")))]),
-      _vm._v(" "),
-      _c("td", [
-        _c("input", {
-          staticClass: "input",
-          attrs: {
-            type: "datetime-local",
-            id: "end-time",
             min: new Date().getDate(),
             max: new Date(
               new Date().setDate(new Date().getDate() + 30)

@@ -58,7 +58,7 @@
             <label>{{ item.passenger_capacity }}</label>
         </td>
     </tr>
-    <tr>
+    <tr v-if="item.passenger_capacity>1">
         <td>{{ __('common.seat_no') }}</td>
         <td>
             <label>{{ __('common.reserved_seats_no') }}:</label>

@@ -17,7 +17,8 @@ class User
         (NULL, 'nasser1', '3178552288', 'nasser.niazymobsser@gmail.com', 'user', '".md5('12345678')."'),
         (NULL, 'nasser2', '4178552288', 'nasser2.niazymobsser@gmail.com', 'agency','".md5('12345678')."'),
         (NULL, 'nasser3', '5178552288', 'nasser3.niazymobsser@gmail.com', 'driver', '".md5('12345678')."'),
-        (NULL, 'nasser4', '6178552288', 'nasser4.niazymobsser@gmail.com', 'admin', '".md5('12345678')."');
+        (NULL, 'nasser4', '5178552288', 'nasser4.niazymobsser@gmail.com', 'driver', '".md5('12345678')."'),
+        (NULL, 'nasser5', '6178552288', 'nasser5.niazymobsser@gmail.com', 'admin', '".md5('12345678')."');
 
 
        "

@@ -21,7 +21,14 @@ abstract class BaseController
             http_response_code($headerCode);
         }
         header('Content-Type: application/json');
-        echo json_encode($output);
+        
+        if (is_object($output) && method_exists($output, 'toJsonString')) 
+        {
+            echo $output->toJsonString();
+        }
+        else{
+            echo json_encode($output);
+        }
     }
 
     protected function post($key)

@@ -20,7 +20,7 @@ class Transfer
         `destination_place_id` int NOT NULL,
         `start_time` DateTime NULL,
         `end_time` DateTime NULL,
-        `executing_driver` int NOT NULL,
+        `executing_driver` int NULL,
         `price_per_ticket` double NOT NULL,
         `vehicle_class_id` int NOT NULL,
         `passenger_capacity` int DEFAULT 1

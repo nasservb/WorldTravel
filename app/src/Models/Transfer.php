@@ -209,19 +209,18 @@ class Transfer extends BaseEntity implements ISearchable
             '   tr.source_place_id =%u and '.
             '   tr.destination_place_id =%u and '.
             '   tr.start_time >=\'%s\' and '.
-            '   tr.end_time <=\'%s\'', 
+            '   tr.start_time <=\'%s\'', 
             $filters['source_place'],
             $filters['destination_place'],
             $filters['start_time'],
             $filters['end_time']
         );
-          
+        //  return $query;
         return DB::run($query);
     }
 
-    public static function getById($id)
-    {
-        
+    public static function getDetailsById($id)
+    {        
         $query=sprintf(
             'SELECT 
                 tr.id as id ,sr_place.name as source, tr.passenger_capacity, 
@@ -244,9 +243,8 @@ class Transfer extends BaseEntity implements ISearchable
         return is_array($data) ? ['data'=>$data[0],'seats'=>$seats]: null;
     }
 
-    public static function find($id)
-    {
-        
+    public static function findTransferById($id)
+    {        
         $query=sprintf(
             'SELECT * from transfers '.
             ' where  '.

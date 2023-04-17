@@ -36,6 +36,11 @@ class Booking extends BaseEntity implements IPrintable
     protected $pickup_time;
 
     /**
+     * @var int
+     */
+    protected $executing_driver;
+
+    /**
      * @var float
      */
     protected $fare;
@@ -55,6 +60,21 @@ class Booking extends BaseEntity implements IPrintable
         $this->transfer_id = $transfer['id'];
         $this->seats_booked = $seatsBooked;
         $this->pickup_time =  date("Y-m-d H:i:s");
+
+        /** assignee driver */
+        if ( $transfer['executing_driver']){
+            $this->executing_driver = $transfer['executing_driver'];
+            
+        }
+        else 
+        {
+           $getFirstAvailableDriverId = User::getFirstDriverByPath(
+            $transfer['source_place_id'],
+            $transfer['destination_place_id']
+           );
+
+           $this->executing_driver =$getFirstAvailableDriverId ? $getFirstAvailableDriverId: null ; 
+        }
     }
 
     /**
@@ -165,19 +185,19 @@ class Booking extends BaseEntity implements IPrintable
         return DB::run($query);
     }
 
-    public static function getById($id)
+    public static function getDetailsById($id)
     {      
 
         $query = 'SELECT 
             bk.id as id ,sr_place.name as source, bk.pickup_time as pickup_time,
             ds_place.name as destination,bk.seats_booked as seats_booked,tr.passenger_capacity,
-            tr.start_time,tr.end_time, bk.fare,vc.name as vehicle_class ,us.name as driver
+            tr.start_time,tr.end_time, bk.fare,vc.name as vehicle_class ,us.name as driver 
             FROM `books` bk 
             INNER join transfers tr on bk.transfer_id = tr.id 
             INNER join places sr_place on tr.source_place_id = sr_place.id 
             INNER join places ds_place on tr.destination_place_id = ds_place.id 
             INNER join vehicle_classes vc on tr.vehicle_class_id = vc.id  
-            left join users us on tr.executing_driver = us.id  
+            left join users us on bk.executing_driver = us.id  
             where bk.id = '. $id; 
        
         $data =  DB::run($query);
