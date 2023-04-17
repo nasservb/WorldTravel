@@ -19,8 +19,8 @@ class BookingTest extends TestCase
     public function testBook()
     {
         /**
- * refresh database 
-*/
+         * refresh database 
+        */
         DB::init();
 
         $this->login();
@@ -74,8 +74,8 @@ class BookingTest extends TestCase
     public function testGetBooks()
     {
         /**
- * refresh database 
-*/
+         * refresh database 
+        */
         DB::init();
 
         $this->login();
@@ -117,8 +117,8 @@ class BookingTest extends TestCase
     public function testGetBookDetails()
     {
         /**
- * refresh database 
-*/
+         * refresh database 
+        */
         DB::init();
 
         $this->login();

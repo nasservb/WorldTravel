@@ -143,7 +143,7 @@ class Transfer extends BaseEntity implements ISearchable
      */
     public function getExecutingDriver()
     {
-        return $this->executing_driver ? (new User())->findById($this->executing_driver) : null;
+        return $this->executing_driver ? (new User(''))->findById($this->executing_driver) : null;
     }
 
     /**
@@ -160,7 +160,7 @@ class Transfer extends BaseEntity implements ISearchable
       */
     public function getSourcePlace()
     {
-        return $this->source_place_id ? (new Place())->findById($this->source_place_id) : null;
+        return $this->source_place_id ? (new Place(''))->findById($this->source_place_id) : null;
     }
 
     /**
@@ -177,7 +177,7 @@ class Transfer extends BaseEntity implements ISearchable
       */
     public function getDestinationPlace()
     {
-        return $this->destination_place_id ? (new Place())->findById($this->destination_place_id) : null;
+        return $this->destination_place_id ? (new Place(''))->findById($this->destination_place_id) : null;
     }
 
     /**

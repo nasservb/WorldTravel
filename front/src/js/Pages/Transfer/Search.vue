@@ -50,6 +50,11 @@ export default {
                 })
                 .catch(errors => {
                     console.log(errors);
+                    if(errors.response && errors.response.status == 403){
+                        this.$router.push({
+                            name: 'login'
+                        });
+                    }      
                     alert(__('common.the_record_is_not_created') + ':' + errors.message);
                 });
 

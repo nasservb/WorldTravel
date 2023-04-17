@@ -35,7 +35,13 @@
     <div class="container">
         <div class="d-flex">
           
-
+<script>
+    function logout() {
+        localStorage.token = ''; 
+        localStorage.isAgency = ''; 
+        window.location = '/'; 
+    }
+</script>
                 <div class="dropdown my-4">
                     <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                         <span class="ml-2 d-none d-lg-block">
@@ -46,14 +52,10 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
 
-                        <a class="dropdown-item" href="/api/auth/logout"
-                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                        <a class="dropdown-item" href="javascript:void(0)"
+                           onclick="event.preventDefault();logout();">
                             <i class="dropdown-icon fe fe-log-out"></i> log out
                         </a>
-                        <form id="logout-form" action="/api/auth/logout" method="POST" style="display: none;">
-                            
-                        </form>
                     </div>
                    
                 </div>
@@ -125,17 +127,14 @@ window.trans = {
         "reset-password": "Reset Password",
         "send-password-reset-link": "Send Password Reset Link",
         "sms-code-prefix": "Your Code is: \n",
-        "your account is successfully activate.": "Your account is successfully activate.",
-        "A fresh verification link has been sent to your email address.": "A fresh verification link has been sent to your email address.",
-        "Before proceeding, please check your email for a verification link.": "Before proceeding, please check your email(spam directory) for a verification link.",
-        "If you did not receive the email": "If you did not receive the email",
-        "click here to request another": "click here to request another",
+
     },
     "common": {
         "executing_driver" :"Driver Name",
         "pickup_time" :"Pickup Time",
         "passenger_capacity" :"Passenger Capacity",
         "seat_no" :"Seat No",
+        "seats_booked" :"Seat No",
         "reserved_seats_no" :"Reserved Seats No",
         "path":"Path", 
         "search":"Search", 
@@ -162,7 +161,7 @@ window.trans = {
         "save": "Save",
         "delete": "Delete",
         "are_you_sure_to_delete": "Are you sure to delete?",
-        "the_record_is_deleted": "The record is deleted",
+        "the_record_is_deleted": "The data is wrong!",
         "the_record_is_not_deleted": "The record is not deleted",
         "the_record_is_updated": "The record is updated",
         "the_record_is_not_updated": "The record is not updated",

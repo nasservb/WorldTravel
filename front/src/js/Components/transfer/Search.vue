@@ -67,6 +67,11 @@ export default {
                 })
                 .catch(errors => {
                     console.log(errors);
+                    if(errors.response && errors.response.status == 403){
+                        this.$router.push({
+                            name: 'login'
+                        });
+                    }      
                 })
                 .finally(() => {
                     this.loading = false;

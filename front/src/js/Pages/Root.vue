@@ -7,14 +7,14 @@ export default {
 
     created() {
         const token = localStorage.token;
-        const isAgency = localStorage.isAgency;
+        
         console.log('token is ', token);
-        if (token) {
+        if (token != 'undefined') {
             this.auth = token;
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
         }
 
-        if (!this.auth || token.length <= 10) {
+        if (token == 'undefined' || !this.auth || token.length <= 10) {
             this.$router.push({
                 name: 'login'
             });

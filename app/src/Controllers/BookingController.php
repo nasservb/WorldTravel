@@ -1,30 +1,15 @@
 <?php
 namespace nasservb\AgencyAssistant\Controllers;
 
-use nasservb\AgencyAssistant\Models\User;
 use nasservb\AgencyAssistant\Models\Booking;
 use nasservb\AgencyAssistant\Models\Transfer;
 use nasservb\AgencyAssistant\Events\SendMail;
 
 class BookingController extends BaseController
 {
-
-    private $user; 
-
-    public function __construct()
-    {
-        $this->user = new User('');        
-    }
-
     public function book()
     {
-        if (!$this->user->checkLogin()) {
-            return $this->render('Authentication required!', 403);
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-            return  $this->render('Bad Request', 401);
-        }
+        $this->checkLogin()->checkPostRequest();
 
         $currentUser = $this->user->getCurrentUser();  
 
@@ -48,7 +33,7 @@ class BookingController extends BaseController
         
         if (is_array($seatsBooked)) {
             foreach($seatsBooked as $seat){
-                $book = new Booking($user['id'], $transfer, $seat, $currentUser['id']);
+                $book = new Booking($user->getId(), $transfer, $seat, $currentUser->getId());
                 $book->save();
             }
             $booked = true  ; 
@@ -72,21 +57,17 @@ class BookingController extends BaseController
 
     public function getBooks()
     {
-        if (!$this->user->checkLogin()) {
-            return $this->render('Authentication required!', 403);
-        }
+        $this->checkLogin()->checkGetRequest();
 
         $currentUser = $this->user->getCurrentUser(); 
          
-        $books =Booking::getBooksByUserId($currentUser['id']);
+        $books =Booking::getBooksByUserId($currentUser->getId());
         return $this->render($books, 200);
     }
 
     public function getBookDetails()
     {
-        if (!$this->user->checkLogin()) {
-            return $this->render('Authentication required!', 403);
-        }
+        $this->checkLogin()->checkGetRequest();
         
         $book = Booking::getById($this->get('id'));
         

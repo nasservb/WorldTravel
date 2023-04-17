@@ -7,6 +7,7 @@ use nasservb\AgencyAssistant\Actions\Add;
 use nasservb\AgencyAssistant\Actions\Search;
 use nasservb\AgencyAssistant\Helpers\Input;
 use nasservb\AgencyAssistant\Database\DB;
+use nasservb\AgencyAssistant\Models\User;
 
 class Main
 {
@@ -16,11 +17,12 @@ class Main
      */
     public static function Start()
     {
-        while (true) {
-            echo Menu::getMainMenu();
-            $number = static::readNumber();
-            static::processMainMenu($number);
-        }
+        var_dump(User::getById(1));
+        //while (true) {
+            //echo Menu::getMainMenu();
+            //$number = static::readNumber();
+            //static::processMainMenu($number);
+        //}
     }
 
     /**

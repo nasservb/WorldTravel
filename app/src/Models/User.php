@@ -1,17 +1,17 @@
 <?php
 
 namespace nasservb\AgencyAssistant\Models;
+
 use nasservb\AgencyAssistant\Database\DB;
 
 class User extends Auth implements ISearchable
 {
- 
     /**
-     * @var string table nem on database 
+     * @var string table nem on database
      */
     protected $_table = 'users' ;
 
-    protected $phone_number = '';
+    protected $phone = '';
 
     protected $user_type = 'user';
 
@@ -23,9 +23,9 @@ class User extends Auth implements ISearchable
         parent::__construct($name);
     }
 
-    public function register($email, $password) : bool
+    public function register($email, $password): bool
     {
-        $this->email_address = $email ; 
+        $this->email_address = $email ;
         $this->password =  md5($password);
 
         return $this->save();
@@ -36,13 +36,13 @@ class User extends Auth implements ISearchable
      */
     public function getPhoneNumber()
     {
-        return $this->phone_number;
+        return $this->phone;
     }
 
     /**
      * @return string
      */
-    public function geUserType()
+    public function getUserType()
     {
         return $this->user_type;
     }
@@ -53,16 +53,16 @@ class User extends Auth implements ISearchable
      */
     public function setPhoneNumber($phone)
     {
-        $this->phone_number= $phone;
+        $this->phone= $phone;
     }
- 
+
     /**
      * @param  str $type
      * @return void
      */
     public function setUserType($type)
     {
-        if(!in_array($type, [])) {
+        if(!in_array($type, ['user','agency','admin','driver'])) {
             throw new Exception('Invalid user type');
         }
 
@@ -71,18 +71,18 @@ class User extends Auth implements ISearchable
 
     /**
      * @param Array $filters
-     * 
-     * @return Array of strings 
+     *
+     * @return Array of strings
      */
     public static function search($filters)
     {
         $query=sprintf(
             'select * from users  
               where  
-                `email`=%s', 
+                `email`=%s',
             $filters['email']
         );
-         return DB::run($query);
+        return DB::run($query);
     }
 
 }

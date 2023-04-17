@@ -22,15 +22,19 @@ export default {
                 page: 1,
             },
         }
-    },
+    }, 
     methods: {
-        getItems() {
+        getItems() {  
             axios.get(route('api.booking.index'))
                 .then(response => {
                     this.response.data = response.data;
                 })
-                .catch(errors => {
-                    console.log(errors);
+                .catch(errors => {                    
+                    if(errors.response && errors.response.status == 403){
+                        this.$router.push({
+                            name: 'login'
+                        });
+                    }       
                 })
                 .finally(() => {
                     this.loading = false;
@@ -71,10 +75,6 @@ export default {
         } = this.$route;
 
         this.getItems();
-    },
-    mounted() {
-        this.getItems();
-
     }
 }
 </script>

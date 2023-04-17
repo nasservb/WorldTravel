@@ -93,6 +93,12 @@ export default {
         },
         multiple: false,
     },
+    data() {
+        return {
+            resource: null,
+            seats: [],
+        }
+    },
     computed: {
         getSeat: {
             get: function () {

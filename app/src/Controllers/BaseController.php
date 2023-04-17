@@ -2,17 +2,20 @@
 namespace nasservb\AgencyAssistant\Controllers;
 
 use nasservb\AgencyAssistant\Helpers\Security;
+use nasservb\AgencyAssistant\Models\User;
 
 abstract class BaseController
 {
     use Security; 
-    
-    public function index()
-    {
 
+    protected $user; 
+
+    public function __construct()
+    {
+        $this->user = new User('');        
     }
 
-    public function render($output,$headerCode=200)
+    protected function render($output,$headerCode=200)
     {
         if ($headerCode) {
             http_response_code($headerCode);
@@ -21,7 +24,7 @@ abstract class BaseController
         echo json_encode($output);
     }
 
-    public function post($key)
+    protected function post($key)
     {
         if (isset($_POST[$key])) {
             return $this->clean($_POST[$key]);
@@ -35,7 +38,7 @@ abstract class BaseController
         return '';
     }
 
-    public function get($key)
+    protected function get($key)
     {
         if (isset($_GET[$key])) {
             return $this->clean($_GET[$key]);
@@ -47,11 +50,35 @@ abstract class BaseController
      * @param  string $key
      * @return cleaned string
      */
-    public function clean($str)
+    protected function clean($str)
     {
         return $this->xss_clean($str);
     }
 
-   
+    protected function checkLogin(){
+        
+        if (!$this->user->checkLogin()) {
+            $this->render('Authentication required!', 403);
+            exit(0);
+        }
+
+        return $this; 
+    }
+
+    protected function checkPostRequest(){
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            $this->render('Bad Request', 401);
+            exit(0);
+        }
+        return $this; 
+    }
+
+    protected function checkGetRequest(){
+        if ($_SERVER['REQUEST_METHOD'] != 'GET') {
+            $this->render('Bad Request', 401);
+            exit(0);
+        }
+        return $this; 
+    }
 
 }

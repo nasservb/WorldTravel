@@ -1,24 +1,12 @@
 <?php
 namespace nasservb\AgencyAssistant\Controllers;
 
-use nasservb\AgencyAssistant\Models\User;
-
 class AuthController extends BaseController
 {
     
-    private $user ; 
-
-    public function __construct()
-    {
-        $this->user = new User('');
-    }
-    
     public function login()
-    {
-        
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-            return  $this->render('Bad Request', 401);
-        }      
+    {        
+        $this->checkPostRequest();    
 
         $email =$this->post('email');
         $password=$this->post('password');
@@ -28,8 +16,7 @@ class AuthController extends BaseController
             
             return  $this->render(
                 [
-                'token'=>$this->user->getToken($email, $userId),
-                'isAgency'=> $this->user->getCurrentUserType() == 'agency' 
+                'token'=>$this->user->getToken($email, $userId)
                 ]
             );
         }
@@ -41,10 +28,7 @@ class AuthController extends BaseController
 
     public function logout()
     {
-
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-            return  $this->render('Bad Request', 401);
-        }   
+        $this->checkLogin()->checkGetRequest();
 
         if ($this->user->logout()) {
             return  $this->render('1');

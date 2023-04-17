@@ -5,7 +5,7 @@
         <div class="card-body">
 
             <div class="flex-none sm:w-full md:w-2/3">
-                <transfer-item :multiple="this.auth ? this.auth.isAgency: false" :resource="resource"></transfer-item>
+                <transfer-item :multiple="multiple" :resource="resource"></transfer-item>
             </div>
         </div>
     </div>
@@ -22,6 +22,7 @@ export default {
         return {
             id: null,
             resource: {},
+            multiple:false 
         }
     },
 
@@ -35,10 +36,19 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.resource = response.data;
+                    console.log(response.data);
+                    if (response.data && response.data.role){
+                        this.resource = response.data.transfer;
+                        this.multiple = response.data.role == 'agency';
+                    }
                 })
                 .catch(errors => {
                     console.log(errors);
+                    if(errors.response && errors.response.status == 403){
+                        this.$router.push({
+                            name: 'login'
+                        });
+                    }
                 });
 
         },
@@ -68,15 +78,18 @@ export default {
                 })
                 .catch(errors => {
                     console.log(errors);
+                    if(errors.response && errors.response.status == 403){
+                        this.$router.push({
+                            name: 'login'
+                        });
+                    }
                 });
 
         },
     },
 
     created() {
-        console.log('created ');
         this.id = this.$route.params.id;
-        console.log('id is ' + this.id);
 
         this.getResource();
     },

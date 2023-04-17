@@ -3,26 +3,14 @@ namespace nasservb\AgencyAssistant\Controllers;
 
 use nasservb\AgencyAssistant\Models\BaseEntity;
 use nasservb\AgencyAssistant\Models\Place;
-use nasservb\AgencyAssistant\Models\User;
 use nasservb\AgencyAssistant\Models\Transfer;
 
 class TransferController extends BaseController
 {
 
-
-    private $user; 
-
-    public function __construct()
-    {
-        $this->user = new User('');
-        
-    }
-
     public function search()
     {
-        if (!$this->user->checkLogin()) {
-            return $this->render('Authentication required!', 403);
-        }
+        $this->checkLogin()->checkGetRequest();
 
         $sourcePlace = (new Place(''))->findById(intval($this->get('source_id')));
         
@@ -67,24 +55,21 @@ class TransferController extends BaseController
 
     public function getTransferDetails()
     {
-       
-        if (!$this->user->checkLogin()) {
-            return $this->render('Authentication required!', 403);
-        }
+        $this->checkLogin()->checkGetRequest();
  
         $transfer = Transfer::getById(intval($this->get('id')));
         if(!$transfer ) {
             return $this->render('the id is not valid!', 422);
         }
 
-        return $this->render($transfer, 200);
+        $user = $this->user->getCurrentUser(); 
+        
+        return $this->render(['role'=>$user->getUserType(), 'transfer'=>$transfer], 200);
     }
 
     public function getPlaces()
     {        
-        if (!$this->user->checkLogin()) {
-            return $this->render('Authentication required!', 403);
-        }
+        $this->checkLogin()->checkGetRequest();
 
         $places =(new Place(''))->getAll();
         return $this->render($places, 200);
@@ -93,9 +78,7 @@ class TransferController extends BaseController
 
     public function getVehicleClasses()
     {        
-        if (!$this->user->checkLogin()) {
-            return $this->render('Authentication required!', 403);
-        }
+        $this->checkLogin()->checkGetRequest();
 
         $vehicleClasses =(new VehicleClass(''))->getAll();
         return $this->render($vehicleClasses, 200);

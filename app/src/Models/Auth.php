@@ -15,6 +15,8 @@ Abstract class Auth extends BaseEntity
 
     /**
      * @param string $name
+     * @param string $email
+     * @param string $password
      */
     public function __construct($name, $email='', $password='')
     {
@@ -25,7 +27,13 @@ Abstract class Auth extends BaseEntity
         @session_start(); 
     }
 
-    public function login($email, $password):bool
+    /**
+     * @param string $email
+     * @param string $password
+     * 
+     * @return userId if successful and 0 if not successful login
+     */
+    public function login($email, $password):int
     {
         $query = 'select * from users where email_address=\'' . 
                 $email . "' and password='" . md5($password)."'";
@@ -54,35 +62,38 @@ Abstract class Auth extends BaseEntity
      * @return User instance
      */
     public function getCurrentUser()
-    {
-        $key ='logged_in_user';
-        if(isset($_SESSION[$key])==false) {
-            return null;
-        }else{
-            return $_SESSION[$key];
-        }        
+    {         
+        return (new User(''))->findById($this->readUserIdFromJwtToken());
     }
     
-    /**
-     * @return boolean is logged in or not
-     */
-    public function checkLogin()
-    {
-
-        $userId =0;
+    private function readUserIdFromJwtToken():int {
         $headers = getallheaders();
             
         if (isset($headers['Authorization'])) {
             $token =  str_replace('Bearer ', '', $headers['Authorization']);
             $secretKey  =$this->getJwtSecretKey();
 
-            $data = JWT::decode(
-                $token,
-                new Key($secretKey, 'HS512')
-            );
-             
-            $userId = $data->userId;
+            try {
+                $data = JWT::decode(
+                    $token,
+                    new Key($secretKey, 'HS512')
+                );
+
+                return $data->userId;
+            }
+            catch(\Exception $e) {
+                return 0;
+            }    
         }
+        return 0;
+    }
+
+    /**
+     * @return boolean is logged in or not
+     */
+    public function checkLogin()
+    {
+        $userId =$this->readUserIdFromJwtToken();        
        
         if(!$userId) {
             return false;
@@ -134,6 +145,12 @@ Abstract class Auth extends BaseEntity
             'userId' => $userId,                     // User name
         ];
 
+        $token = JWT::encode(
+            $data,
+            $secretKey,
+            'HS512'
+        );
+
         return JWT::encode(
             $data,
             $secretKey,
@@ -146,35 +163,5 @@ Abstract class Auth extends BaseEntity
         return  'bGS6lzFqvvSQ8ALbOxatm7/pk7mLQyzqaS34Q4oR1ew=';
     }
 
-    public function getCurrentUserType()
-    {        
-        $userId =0;
-
-        /**
-         * read from jwt token
-         */
-        $headers = getallheaders();
-        if (in_array('Authorization', $headers)) {
-            $token =  str_replace('Bearer ', '', $headers['Authorization']);
-            $secretKey  =$this->getJwtSecretKey();
-
-            $data = JWT::decode(
-                $token,
-                $secretKey,
-                'HS512'
-            );
-            
-            $userId = $data['userId'];
-        }
-
-        /**
-         * read from session
-         */
-        if (!$userId && isset($_SESSION['logged_in_user'])) {
-            $userId =$_SESSION['logged_in_user']['id'];
-        } 
-        
-        return  $userId ;
-    }
     
 }

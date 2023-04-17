@@ -19,8 +19,8 @@ class TransferTest extends TestCase
     public function testSearch()
     {
         /**
- * refresh database 
-*/
+         * refresh database 
+        */
         DB::init();
 
         $this->login();

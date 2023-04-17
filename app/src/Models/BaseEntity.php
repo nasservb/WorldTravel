@@ -35,6 +35,14 @@ abstract class BaseEntity
     {
         $this->name = $name;
     }
+
+    /**
+     * @param int
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
     
     /**
      * @return string
@@ -51,6 +59,7 @@ abstract class BaseEntity
     {
         return $this->id;
     }
+
 
     /**
      * @return entity object stored in the database
@@ -101,17 +110,17 @@ abstract class BaseEntity
     {
         $query = "select * from `$this->_table` where id = $id;";
         $data= DB::run($query);
+     
         if (is_array($data)) {
+           
             foreach( $data[0] as $col => $val) {
                 if ($col == '_table' || $val == null) { 
                     continue;
                 }
-                if (isset($data[0][$col])) {
-                    $this->{$col} = $data[0][$col];
-                }
+                $this->{$col} = $data[0][$col];                
             } 
+           
         }
-        
         return $this;
     }
 }
