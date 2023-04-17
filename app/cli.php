@@ -17,12 +17,11 @@ class Main
      */
     public static function Start()
     {
-        var_dump(User::getById(1));
-        //while (true) {
-            //echo Menu::getMainMenu();
-            //$number = static::readNumber();
-            //static::processMainMenu($number);
-        //}
+        while (true) {
+            echo Menu::getMainMenu();
+            $number = static::readNumber();
+            static::processMainMenu($number);
+        }
     }
 
     /**
