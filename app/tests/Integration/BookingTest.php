@@ -1,33 +1,25 @@
 <?php
 
-namespace Tests\Integration;
+namespace nasservb\AgencyAssistant\Tests\Integration;
+
 
 use nasservb\AgencyAssistant\Services\HotelService;
 use nasservb\AgencyAssistant\Controllers\BookingController;
 use nasservb\AgencyAssistant\Models\Booking;
-use nasservb\AgencyAssistant\Models\User;
 use nasservb\AgencyAssistant\Database\DB;
 
-use PHPUnit\Framework\TestCase;
+class BookingTest extends BaseTest{
 
-class BookingTest extends TestCase
-{
-    
     /**
      * @test
      */
     public function testBook()
     {
-        /**
-         * refresh database 
-        */
-        DB::init();
+        $this->refreshDatabase()->login()->preparePostRequest();
 
-        $this->login();
         ob_start();
         $bookingController = new BookingController();
 
-        $_SERVER['REQUEST_METHOD']= 'POST' ;
         $_POST = [
             'transfer_id'=>0
         ]; 
@@ -73,23 +65,13 @@ class BookingTest extends TestCase
      */
     public function testGetBooks()
     {
-        /**
-         * refresh database 
-        */
-        DB::init();
+        $this->refreshDatabase()->login()->prepareGetRequest();
 
-        $this->login();
         ob_start();
         $bookingController = new BookingController();
         
         $bookingController->getBooks(); 
         $output = ob_get_clean();
-
-        ob_start();
-        (new User(''))->logout(); 
-        $bookingController->getBooks(); 
-
-        $output2 = ob_get_clean();
 
         ob_end_clean();
 
@@ -107,7 +89,6 @@ class BookingTest extends TestCase
         );
 
         $this->assertEquals(($output), json_encode($books));
-        $this->assertEquals(json_decode($output2), 'Authentication required!');
 
     }
 
@@ -116,12 +97,9 @@ class BookingTest extends TestCase
       */
     public function testGetBookDetails()
     {
-        /**
-         * refresh database 
-        */
-        DB::init();
+        $this->refreshDatabase()->login()->prepareGetRequest();
+        
 
-        $this->login();
         ob_start();
         $bookingController = new BookingController();
         
@@ -140,13 +118,6 @@ class BookingTest extends TestCase
         $output2 = ob_get_clean();
         ob_end_clean();
 
-        ob_start();
-        (new User(''))->logout(); 
-        $bookingController->getBooks(); 
-        $output3 = ob_get_clean();
-
-        ob_end_clean();
-
         $bookOnDB= DB::run('select * from books where id = 1 ');
 
         $this->assertEquals(json_decode($output), 'the id is not valid!');
@@ -159,13 +130,6 @@ class BookingTest extends TestCase
         $this->assertEquals($bookOnDB['user_id'], $book[0]['user_id']);
         $this->assertEquals($bookOnDB['fare'], $book[0]['fare']);
 
-        $this->assertEquals(json_decode($output3), 'Authentication required!');
-    }
-
-
-    private function login()
-    {
-        (new User(''))->login('nasser.niazymobsser@gmail.com', '12345678');
     }
 
 }

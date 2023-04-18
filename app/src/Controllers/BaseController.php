@@ -6,6 +6,7 @@ use nasservb\AgencyAssistant\Models\User;
 
 abstract class BaseController
 {
+
     use Security; 
 
     protected $user; 
@@ -87,5 +88,6 @@ abstract class BaseController
         }
         return $this; 
     }
+
 
 }

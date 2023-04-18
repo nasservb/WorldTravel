@@ -64,10 +64,27 @@ Abstract class Auth extends BaseEntity
     public function getCurrentUser()
     {         
         return (new User(''))->findById($this->readUserIdFromJwtToken());
+    }    
+
+    private function getallheaders() {
+        if (!function_exists('getallheaders'))
+        {
+            $headers = [];
+            foreach ($_SERVER as $name => $value) {
+                if (substr($name, 0, 5) == 'HTTP_') {
+                    $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+                }
+            }
+            return $headers;   
+        }
+        else 
+        {
+            return getallheaders();
+        }     
     }
-    
+
     private function readUserIdFromJwtToken():int {
-        $headers = getallheaders();
+        $headers = $this->getallheaders();
             
         if (isset($headers['Authorization'])) {
             $token =  str_replace('Bearer ', '', $headers['Authorization']);
