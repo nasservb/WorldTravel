@@ -23,6 +23,8 @@ class DB
         if (!$driver ) {
             static::$driver = new Mysql(); 
             static::$driver->connect('db', 'world_travel', 'root', '12345678'); 
+        } else {
+            static::$driver = $driver;
         }
     }
 
